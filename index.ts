@@ -3,6 +3,7 @@ import settings from './settings';
 import apiEmpl from './routes/empleados.route';
 import apiUsua from './routes/usuarios.route';
 import apiAuth from './routes/auth.route';
+import apiPedido from './routes/pedidos.route';
 import MongoDBHelper from './helpers/mongodb.helpers';
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
@@ -28,6 +29,7 @@ app.use(cors({origin: true, credentials: true}));
 app.use('/empleados', apiEmpl);
 app.use('/usuarios', apiUsua);
 app.use('/auth', apiAuth);
+app.use('/pedidos',apiPedido);
 
 //Start Servers
 const startServers = async () => {
