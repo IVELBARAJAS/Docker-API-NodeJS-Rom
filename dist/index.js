@@ -17,6 +17,7 @@ const settings_1 = __importDefault(require("./settings"));
 const empleados_route_1 = __importDefault(require("./routes/empleados.route"));
 const usuarios_route_1 = __importDefault(require("./routes/usuarios.route"));
 const auth_route_1 = __importDefault(require("./routes/auth.route"));
+const pedidos_route_1 = __importDefault(require("./routes/pedidos.route"));
 const mongodb_helpers_1 = __importDefault(require("./helpers/mongodb.helpers"));
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const cors_1 = __importDefault(require("cors"));
@@ -36,6 +37,7 @@ app.use(cors_1.default({ origin: true, credentials: true }));
 app.use('/empleados', empleados_route_1.default);
 app.use('/usuarios', usuarios_route_1.default);
 app.use('/auth', auth_route_1.default);
+app.use('/pedidos', pedidos_route_1.default);
 //Start Servers
 const startServers = () => __awaiter(void 0, void 0, void 0, function* () {
     //Connect to MongoDB

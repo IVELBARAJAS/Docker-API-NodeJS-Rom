@@ -27,6 +27,7 @@ api.get('/test', (req, res, next) => {
         msg: 'API Auth Works111!!'
     });
 });
+//Login usuario
 api.post('/login', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     mongo.setDataBase('dbromanis');
@@ -53,7 +54,67 @@ api.post('/login', (req, res, next) => __awaiter(void 0, void 0, void 0, functio
                 code: 200,
                 enviroment: settings_1.default.api.enviroment,
                 msg: 'Inicio de sesión exitoso',
-                info: user.data
+                _id: user.data._id,
+                nombre: user.data.nombre,
+                apellido: user.data.apellido,
+                email: user.data.email,
+                direccion: user.data.direccion,
+                tarjeta: user.data.tarjeta,
+                saldo: user.data.saldo,
+                rol: 'Usuario'
+            });
+        }
+        else {
+            res.status(401).json({
+                status: "No encontrado",
+                code: 401,
+                enviroment: settings_1.default.api.enviroment,
+                msg: 'Usuario o contrasena incorrectos'
+            });
+        }
+    }
+    else {
+        res.status(401).json({
+            status: "No autorizado",
+            code: 401,
+            enviroment: settings_1.default.api.enviroment,
+            msg: 'Usuario o contrasena incorrectos'
+        });
+    }
+}));
+//Login de empleado
+api.post('/login/empleado', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, password } = req.body;
+    mongo.setDataBase('dbromanis');
+    const user = yield mongo.db.collection('empleados').findOne({ email })
+        .then((result) => {
+        return {
+            status: 'success',
+            data: result
+        };
+    })
+        .catch((err) => {
+        return {
+            status: 'err',
+            data: err
+        };
+    });
+    //Valida si encontro usuario
+    if (user.status == 'success' && user.data != null) {
+        //Se comprueba contrasena
+        if (bcryptjs_1.default.compareSync(password, user.data.password)) {
+            res.status(200).json({
+                token: jsonwebtoken_1.default.sign(user, 'roma'),
+                status: "success",
+                code: 200,
+                enviroment: settings_1.default.api.enviroment,
+                msg: 'Inicio de sesión exitoso',
+                _id: user.data._id,
+                nombre: user.data.nombre,
+                apellido: user.data.apellido,
+                email: user.data.email,
+                rol: user.data.rol,
+                turno: user.data.turno
             });
         }
         else {

@@ -91,7 +91,6 @@ api.get('/consultAll/:pageNumber/:pageSize/',async(req: Request,res:Response,nex
 
 //Registro de usuario
 api.post('/add',async(req: Request,res:Response,next:NextFunction)=>{
-
     const{nombre,apellido,email,password,direccion,tarjeta,saldo}=req.body;
 
     mongo.setDataBase('dbromanis')
@@ -99,6 +98,7 @@ api.post('/add',async(req: Request,res:Response,next:NextFunction)=>{
     var salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
+    
     const result = await mongo.db.collection('usuarios').insertOne({
         nombre,apellido,email,password:hash,direccion,tarjeta,saldo
     })

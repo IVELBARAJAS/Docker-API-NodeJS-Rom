@@ -3,6 +3,7 @@ import MongoDBHelper from '../helpers/mongodb.helpers'
 import settings from '../settings';
 import paginate from 'jw-paginate'
 import mongoClient  from 'mongodb';
+import bcrypt from 'bcryptjs';
 
 const api= Router();
 const mongo = MongoDBHelper.getInstance();
@@ -94,11 +95,17 @@ api.get('/consultAll/:pageNumber/:pageSize/',async(req: Request,res:Response,nex
 
 //Agregar empleado
 api.post('/add',async(req: Request,res:Response,next:NextFunction)=>{
+
     const{nombre,apellido,email,password,rol,salario,turno,foto}=req.body;
 
     mongo.setDataBase('dbromanis')
+
+    var salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+    console.log(hash)
+
     const result = await mongo.db.collection('empleados').insertOne({
-        nombre,apellido,email,password,rol,salario,turno,foto
+        nombre,apellido,email,password:hash,rol,salario,turno,foto
     })
     .then((result: any) =>{
         return{

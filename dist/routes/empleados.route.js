@@ -17,6 +17,7 @@ const mongodb_helpers_1 = __importDefault(require("../helpers/mongodb.helpers"))
 const settings_1 = __importDefault(require("../settings"));
 const jw_paginate_1 = __importDefault(require("jw-paginate"));
 const mongodb_1 = __importDefault(require("mongodb"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const api = express_1.Router();
 const mongo = mongodb_helpers_1.default.getInstance();
 //Prueba de API
@@ -96,8 +97,11 @@ api.get('/consultAll/:pageNumber/:pageSize/', (req, res, next) => __awaiter(void
 api.post('/add', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { nombre, apellido, email, password, rol, salario, turno, foto } = req.body;
     mongo.setDataBase('dbromanis');
+    var salt = bcryptjs_1.default.genSaltSync(10);
+    const hash = bcryptjs_1.default.hashSync(password, salt);
+    console.log(hash);
     const result = yield mongo.db.collection('empleados').insertOne({
-        nombre, apellido, email, password, rol, salario, turno, foto
+        nombre, apellido, email, password: hash, rol, salario, turno, foto
     })
         .then((result) => {
         return {
