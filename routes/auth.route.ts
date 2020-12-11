@@ -56,7 +56,8 @@ api.post('/login',async(req: Request, res: Response, next: NextFunction)=>{
             direccion : user.data.direccion,
             tarjeta : user.data.tarjeta,
             saldo : user.data.saldo,
-            rol: 'Usuario'
+            rol: 'Usuario',
+            info: user.data
         })  
         }else{
             res.status(401).json({

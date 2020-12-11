@@ -91,7 +91,7 @@ api.get('/consultAll/:pageNumber/:pageSize/',async(req: Request,res:Response,nex
 
 //Registro de usuario
 api.post('/add',async(req: Request,res:Response,next:NextFunction)=>{
-    const{nombre,apellido,email,password,direccion,tarjeta,saldo}=req.body;
+    const{nombre,apellido,email,password,rol,direccion,tarjeta,saldo}=req.body;
 
     mongo.setDataBase('dbromanis')
 
@@ -100,7 +100,7 @@ api.post('/add',async(req: Request,res:Response,next:NextFunction)=>{
 
     
     const result = await mongo.db.collection('usuarios').insertOne({
-        nombre,apellido,email,password:hash,direccion,tarjeta,saldo
+        nombre,apellido,email,password:hash,rol,direccion,tarjeta,saldo
     })
     .then((result: any) =>{
         return{
