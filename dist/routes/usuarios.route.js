@@ -92,12 +92,12 @@ api.get('/consultAll/:pageNumber/:pageSize/', (req, res, next) => __awaiter(void
 }));
 //Registro de usuario
 api.post('/add', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { nombre, apellido, email, password, direccion, tarjeta, saldo } = req.body;
+    const { nombre, apellido, email, password, rol, direccion, tarjeta, saldo } = req.body;
     mongo.setDataBase('dbromanis');
     var salt = bcryptjs_1.default.genSaltSync(10);
     const hash = bcryptjs_1.default.hashSync(password, salt);
     const result = yield mongo.db.collection('usuarios').insertOne({
-        nombre, apellido, email, password: hash, direccion, tarjeta, saldo
+        nombre, apellido, email, password: hash, rol, direccion, tarjeta, saldo
     })
         .then((result) => {
         return {

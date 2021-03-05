@@ -4,9 +4,9 @@ export default {
         enviroment: 'DEV'//DEV | QA | PROD
     },
     mongodb:{
-        host:'localhost',
+        host:'192.168.1.213',
         port:'27017',
-        userName:'',
-        password:''
+        userName:'dba-root',
+        password:'mongoadmin'
     }
 }

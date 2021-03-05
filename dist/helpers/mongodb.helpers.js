@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const settings_1 = __importDefault(require("../settings"));
 const mongodb_1 = require("mongodb");
 class MongoDBHelper {
-    constructor(isAuth = false) {
+    constructor(isAuth = true) {
         if (isAuth) {
             this.dbUri = `mongodb://${settings_1.default.mongodb.userName}:${settings_1.default.mongodb.password}@${settings_1.default.mongodb.host}:${settings_1.default.mongodb.port}`;
         }
@@ -24,7 +24,7 @@ class MongoDBHelper {
         }
     }
     ;
-    static getInstance(isAuth = false) {
+    static getInstance(isAuth = true) {
         return this._instance || (this._instance = new this(isAuth));
     }
     connect(dataBase, options = { useNewUrlParser: true, useUnifiedTopology: true }) {

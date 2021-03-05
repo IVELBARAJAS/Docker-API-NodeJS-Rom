@@ -61,7 +61,8 @@ api.post('/login', (req, res, next) => __awaiter(void 0, void 0, void 0, functio
                 direccion: user.data.direccion,
                 tarjeta: user.data.tarjeta,
                 saldo: user.data.saldo,
-                rol: 'Usuario'
+                rol: 'Usuario',
+                info: user.data
             });
         }
         else {
