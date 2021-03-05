@@ -11,6 +11,9 @@ export default class MongoDBHelper{
     private dbUri: string;
 
     constructor(isAuth: boolean=true){
+        
+        this.statusCnn = "OK";
+
         if(isAuth){
             this.dbUri= `mongodb://${settings.mongodb.userName}:${settings.mongodb.password}@${settings.mongodb.host}:${settings.mongodb.port}`
         }else{
